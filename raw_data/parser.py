@@ -33,9 +33,6 @@ def process_directory(directory):
             all_content[filename] = content
     return all_content
 
-import json
-import re
-
 def process_startup(startup_data):
     result = {}
     result['name'] = next(iter(startup_data.keys()))

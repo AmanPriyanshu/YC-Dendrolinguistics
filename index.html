@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentence Embedding Demo</title>
+    <title>Sentence Embedding Search Demo</title>
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
     <style>
         body {
@@ -27,24 +27,47 @@
     </style>
 </head>
 <body>
-    <h1>Sentence Embedding Demo</h1>
-    <p>Enter a sentence and click "Compute Embedding" to get its vector representation.</p>
+    <h1>Sentence Embedding Search Demo</h1>
+    <p>Enter a sentence and click "Search" to find the most similar document.</p>
     <textarea id="input" placeholder="Enter your sentence here..."></textarea>
-    <button onclick="computeEmbedding()">Compute Embedding</button>
+    <button onclick="searchSimilarDocument()">Search</button>
     <h2>Result:</h2>
     <div id="result"></div>
 
     <script>
         let pipeline;
+        let documentEmbeddings;
 
-        // Initialize the pipeline
+        // Initialize the pipeline and load document embeddings
         async function init() {
             const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
-            window.pipeline = await pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs');
+            window.pipeline = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+            
+            // Load the JSON file containing document embeddings
+            const response = await fetch('document_embeddings.json');
+            documentEmbeddings = await response.json();
+            
             document.querySelector('button').disabled = false;
         }
 
-        async function computeEmbedding() {
+        function cosineSimilarity(a, b) {
+            let dotProduct = 0;
+            let normA = 0;
+            let normB = 0;
+            for (let i = 0; i < a.length; i++) {
+                dotProduct += a[i] * b[i];
+                normA += a[i] * a[i];
+                normB += b[i] * b[i];
+            }
+            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        }
+
+        function averageEmbedding(embeddings) {
+            const sum = embeddings.reduce((acc, curr) => acc.map((val, i) => val + curr[i]));
+            return sum.map(val => val / embeddings.length);
+        }
+
+        async function searchSimilarDocument() {
             const input = document.getElementById('input').value;
             const result = document.getElementById('result');
 
@@ -53,18 +76,32 @@
                 return;
             }
 
-            result.textContent = "Computing...";
+            result.textContent = "Searching...";
 
             try {
-                const output = await window.pipeline(input, { pooling: 'mean', normalize: true });
-                const embedding = Array.from(output.data);
-                result.textContent = `Embedding (${embedding.length} dimensions):\n${JSON.stringify(embedding, null, 2)}`;
+                const inputEmbedding = await window.pipeline(input, { pooling: 'mean', normalize: true });
+                const inputVector = Array.from(inputEmbedding.data);
+
+                let mostSimilarDoc = '';
+                let highestSimilarity = -Infinity;
+
+                for (const [docName, docEmbeddings] of Object.entries(documentEmbeddings)) {
+                    const avgDocEmbedding = averageEmbedding(docEmbeddings);
+                    const similarity = cosineSimilarity(inputVector, avgDocEmbedding);
+
+                    if (similarity > highestSimilarity) {
+                        highestSimilarity = similarity;
+                        mostSimilarDoc = docName;
+                    }
+                }
+
+                result.textContent = `Most similar document: ${mostSimilarDoc}\nSimilarity score: ${highestSimilarity.toFixed(4)}`;
             } catch (error) {
                 result.textContent = `Error: ${error.message}`;
             }
         }
 
-        // Initialize the pipeline when the page loads
+        // Initialize the pipeline and load embeddings when the page loads
         init();
     </script>
 </body>
