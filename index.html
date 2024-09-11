@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Embedding Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        #result {
+            white-space: pre-wrap;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentence Embedding Demo</h1>
+    <p>Enter a sentence and click "Compute Embedding" to get its vector representation.</p>
+    <textarea id="input" placeholder="Enter your sentence here..."></textarea>
+    <button onclick="computeEmbedding()">Compute Embedding</button>
+    <h2>Result:</h2>
+    <div id="result"></div>
+
+    <script>
+        let pipeline;
+
+        // Initialize the pipeline
+        async function init() {
+            const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+            window.pipeline = await pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs');
+            document.querySelector('button').disabled = false;
+        }
+
+        async function computeEmbedding() {
+            const input = document.getElementById('input').value;
+            const result = document.getElementById('result');
+
+            if (!input) {
+                result.textContent = "Please enter a sentence.";
+                return;
+            }
+
+            result.textContent = "Computing...";
+
+            try {
+                const output = await window.pipeline(input, { pooling: 'mean', normalize: true });
+                const embedding = Array.from(output.data);
+                result.textContent = `Embedding (${embedding.length} dimensions):\n${JSON.stringify(embedding, null, 2)}`;
+            } catch (error) {
+                result.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        // Initialize the pipeline when the page loads
+        init();
+    </script>
+</body>
+</html>
