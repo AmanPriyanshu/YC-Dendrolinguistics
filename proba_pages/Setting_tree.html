@@ -1,0 +1,1320 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting Pitch Tree</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        #tree-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #252c45;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        .description {
+            background-color: #e9f0f7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .description h2 {
+            color: #252c45;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        .description ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .tree-node {
+            margin-left: 20px;
+            border-left: 1px solid #ddd;
+            padding-left: 15px;
+            position: relative;
+        }
+        .tree-content {
+            cursor: pointer;
+            user-select: none;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .tree-content:hover {
+            background-color: #f0f4f7;
+        }
+        .tree-content::before {
+            content: '▶';
+            color: #1d59d6;
+            display: inline-block;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+        .tree-content-open::before {
+            transform: rotate(90deg);
+        }
+        .tree-children {
+            display: none;
+            margin-top: 5px;
+        }
+        .tree-children-open {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            color: white;
+        }
+        .Technology { background-color: #3498db; }
+        .Industry { background-color: #2ecc71; }
+        .CompanyName { background-color: #9b59b6; }
+        .Solution { background-color: #e74c3c; }
+        .Audience { background-color: #f39c12; }
+        .Problem { background-color: #1abc9c; }
+        .ActionVerb { background-color: #34495e; }
+        .Innovation { background-color: #16a085; }
+        .MarketTask { background-color: #2c3e50; }
+        .Adjective { background-color: #7f8c8d; }
+        .ValueProp { background-color: #8e44ad; }
+        .KeyFeature { background-color: #2980b9; }
+        .PersonName { background-color: #c0392b; }
+        .percentage {
+            font-size: 0.8em;
+            color: #666;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="tree-container">
+        <h1>YC Startup Pitch Patterns: Analyzing Setting Pitch Tree Responses</h1>
+        <div class="description">
+            <h2>How to Interpret This Tree</h2>
+            <p>This tree diagram visualizes the patterns in how AI startups structure their pitch narratives based on an analysis of YCombinator application responses. Each node represents a key element of the pitch, and the percentages show how often that element appears at each level of the narrative structure.</p>
+            <ul>
+                <li>The top-level elements show what startups tend to lead with in their pitches.</li>
+                <li>Child nodes reveal common follow-up elements.</li>
+                <li>Percentages indicate the frequency of each pattern.</li>
+                <li>The deeper the branch, the more detailed and less common the pattern.</li>
+            </ul>
+            <p>This analysis helps understand how AI startups typically structure their value propositions and what elements they prioritize when pitching their ideas.</p>
+        </div>
+        <div class="tree">
+
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">38.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">17.13%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">6.12%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span><span class="tag Industry">Industry</span><span class="tag KeyFeature">KeyFeature</span><span class="tag CompanyName">CompanyName</span><span class="tag Audience">Audience</span><span class="tag Problem">Problem</span><span class="tag ActionVerb">ActionVerb</span>
+                    <span class="percentage">3.36%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">2.45%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag PersonName">PersonName</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag KeyFeature">KeyFeature</span><span class="tag Audience">Audience</span><span class="tag Solution">Solution</span><span class="tag Problem">Problem</span><span class="tag MarketTask">MarketTask</span><span class="tag Adjective">Adjective</span>
+                    <span class="percentage">3.67%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">3.36%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span><span class="tag CompanyName">CompanyName</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span><span class="tag PersonName">PersonName</span><span class="tag Problem">Problem</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag ActionVerb">ActionVerb</span>
+                    <span class="percentage">0.31%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag MarketTask">MarketTask</span>
+                    <span class="percentage">0.61%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">4.59%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">3.36%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag CompanyName">CompanyName</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span><span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">0.92%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">0.61%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">0.92%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">3.98%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span><span class="tag Industry">Industry</span><span class="tag PersonName">PersonName</span><span class="tag CompanyName">CompanyName</span><span class="tag Problem">Problem</span><span class="tag ActionVerb">ActionVerb</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag ActionVerb">ActionVerb</span><span class="tag CompanyName">CompanyName</span><span class="tag Industry">Industry</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span>
+                    <span class="percentage">3.98%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag ActionVerb">ActionVerb</span><span class="tag Technology">Technology</span><span class="tag Industry">Industry</span><span class="tag KeyFeature">KeyFeature</span><span class="tag PersonName">PersonName</span><span class="tag Audience">Audience</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">3.98%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">3.67%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag ActionVerb">ActionVerb</span><span class="tag Industry">Industry</span><span class="tag PersonName">PersonName</span><span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">3.67%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span>
+                    <span class="percentage">2.45%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag Solution">Solution</span><span class="tag PersonName">PersonName</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">2.45%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag KeyFeature">KeyFeature</span><span class="tag MarketTask">MarketTask</span>
+                    <span class="percentage">0.92%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">26.30%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">23.24%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">9.79%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">3.67%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span><span class="tag KeyFeature">KeyFeature</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span><span class="tag CompanyName">CompanyName</span><span class="tag Industry">Industry</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span><span class="tag Audience">Audience</span><span class="tag Industry">Industry</span><span class="tag ActionVerb">ActionVerb</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span><span class="tag Audience">Audience</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">8.56%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">3.98%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag Audience">Audience</span><span class="tag PersonName">PersonName</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag Industry">Industry</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span><span class="tag Technology">Technology</span><span class="tag MarketTask">MarketTask</span><span class="tag Audience">Audience</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag Solution">Solution</span><span class="tag Industry">Industry</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">0.92%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">3.06%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag Problem">Problem</span><span class="tag Audience">Audience</span><span class="tag Industry">Industry</span><span class="tag KeyFeature">KeyFeature</span>
+                    <span class="percentage">2.45%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span><span class="tag Industry">Industry</span><span class="tag Audience">Audience</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span><span class="tag Innovation">Innovation</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">0.61%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">16.21%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">10.09%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">6.42%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">4.59%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">3.06%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">2.75%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">0.61%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">0.31%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span><span class="tag ActionVerb">ActionVerb</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span><span class="tag KeyFeature">KeyFeature</span><span class="tag PersonName">PersonName</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span><span class="tag Solution">Solution</span><span class="tag KeyFeature">KeyFeature</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">2.45%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag Technology">Technology</span><span class="tag Audience">Audience</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag Industry">Industry</span><span class="tag CompanyName">CompanyName</span><span class="tag Technology">Technology</span><span class="tag MarketTask">MarketTask</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span><span class="tag Audience">Audience</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span><span class="tag Technology">Technology</span><span class="tag CompanyName">CompanyName</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span><span class="tag Solution">Solution</span><span class="tag ActionVerb">ActionVerb</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span>
+                    <span class="percentage">6.12%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span><span class="tag Problem">Problem</span><span class="tag CompanyName">CompanyName</span><span class="tag PersonName">PersonName</span><span class="tag Industry">Industry</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag KeyFeature">KeyFeature</span><span class="tag Technology">Technology</span><span class="tag Problem">Problem</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag Audience">Audience</span><span class="tag ActionVerb">ActionVerb</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span><span class="tag Problem">Problem</span><span class="tag Solution">Solution</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">5.50%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Solution">Solution</span><span class="tag Problem">Problem</span><span class="tag CompanyName">CompanyName</span><span class="tag Industry">Industry</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Technology">Technology</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag PersonName">PersonName</span><span class="tag KeyFeature">KeyFeature</span><span class="tag Technology">Technology</span><span class="tag Problem">Problem</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span><span class="tag MarketTask">MarketTask</span><span class="tag Audience">Audience</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag MarketTask">MarketTask</span>
+                    <span class="percentage">1.22%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span>
+                    <span class="percentage">3.67%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Problem">Problem</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag Technology">Technology</span><span class="tag Problem">Problem</span><span class="tag PersonName">PersonName</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag CompanyName">CompanyName</span><span class="tag Audience">Audience</span><span class="tag PersonName">PersonName</span><span class="tag Technology">Technology</span><span class="tag Industry">Industry</span><span class="tag Solution">Solution</span>
+                    <span class="percentage">1.83%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Audience">Audience</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag Industry">Industry</span><span class="tag PersonName">PersonName</span><span class="tag ValueProp">ValueProp</span><span class="tag Audience">Audience</span><span class="tag CompanyName">CompanyName</span><span class="tag Technology">Technology</span>
+                    <span class="percentage">2.14%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+                </div>
+            </div>
+            
+            <div class="tree-node">
+                <div class="tree-content">
+                    <span class="tag ActionVerb">ActionVerb</span><span class="tag KeyFeature">KeyFeature</span><span class="tag Innovation">Innovation</span><span class="tag MarketTask">MarketTask</span>
+                    <span class="percentage">1.53%</span>
+                </div>
+                <div class="tree-children">
+            
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.tree-content').forEach(node => {
+            node.addEventListener('click', function() {
+                this.classList.toggle('tree-content-open');
+                this.nextElementSibling.classList.toggle('tree-children-open');
+            });
+        });
+    </script>
+</body>
+</html>
