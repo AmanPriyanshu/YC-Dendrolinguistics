@@ -52,3 +52,14 @@ with open(os.path.join("data", "extracted_content.json"), "r", encoding="utf-8")
 startup_embeddings = process_startups(startup_data, tokenizer, model, batch_size, window_size)
 with open("document_embeddings.json", "w", encoding="utf-8") as f:
     json.dump(startup_embeddings, f)
+
+with open(os.path.join("data", "name_to_url.json"), "r", encoding="utf-8") as f:
+    name_to_url_dict = json.load(f)
+startups = []
+for start_name, startup_details in startup_data.items():
+    url = name_to_url_dict[start_name]
+    startup_details["name"] = startup_details["name"][:-5]
+    startup_details['url'] = url
+    startups.append(startup_details)
+with open("startups.json", "w", encoding="utf-8") as f:
+    json.dump(startups, f, indent=4)

@@ -50,7 +50,7 @@
             // Load the JSON file containing document embeddings from GitHub
             console.log('Loading document embeddings from GitHub...');
             try {
-                const response = await fetch('https://raw.githubusercontent.com/AmanPriyanshu/YC-Dendrolinguistics/main/document_embeddings.json');
+                const response = await fetch('https://raw.githubusercontent.com/AmanPriyanshu/YC-Dendrolinguistics/main/data/document_embeddings.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
