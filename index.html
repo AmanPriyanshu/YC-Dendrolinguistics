@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Startup Similarity Search</title>
+    <title>AI Startup Analysis Hub</title>
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
     <style>
+        /* Existing styles */
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f4f4f4;
             padding: 20px;
+            margin: 0;
+        }
+        .container {
             max-width: 800px;
             margin: 0 auto;
+            padding: 0 20px;
         }
         h1 {
             color: #252c45;
@@ -20,6 +25,38 @@
             margin-bottom: 20px;
             font-size: 2rem;
         }
+        /* New navigation styles */
+        nav {
+            background-color: #252c45;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: #3a4258;
+        }
+        .section-title {
+            text-align: center;
+            margin-top: 40px;
+            color: #252c45;
+        }
+        /* Existing styles continued */
         textarea {
             width: 100%;
             height: 100px;
@@ -92,19 +129,6 @@
             margin-right: 5px;
             color: white;
         }
-        .tag.url {
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .tag.url:hover {
-            opacity: 0.8;
-        }
-        .startup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 10px;
-        }
         .founders {
             margin-top: 15px;
         }
@@ -126,11 +150,22 @@
     </style>
 </head>
 <body>
-    <h1>Startup Similarity Search</h1>
-    <p>Enter a search query and click "Search" to find the top 4 most semantically similar startups.</p>
-    <textarea id="input" placeholder="Enter your startup search query here..."></textarea>
-    <button onclick="searchSimilarStartups()" disabled>Search</button>
-    <div id="result"></div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="graphs.html">Startup Graphs</a></li>
+            <li><a href="proba_pages.html">Probability Analysis</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h1 class="section-title">AI Startup Similarity Search</h1>
+        <p>Enter a search query and click "Search" to find the top 4 most semantically similar startups.</p>
+        <textarea id="input" placeholder="Enter your startup search query here..."></textarea>
+        <button onclick="searchSimilarStartups()" disabled>Search</button>
+        <div id="result"></div>
+    </div>
     <script>
         let pipeline;
         let documentEmbeddings = {};

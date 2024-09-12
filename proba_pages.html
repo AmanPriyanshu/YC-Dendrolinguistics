@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probability Trees - AI Startup Analysis Hub</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        nav {
+            background-color: #252c45;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: #3a4258;
+        }
+        h1 {
+            color: #252c45;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .tree-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .tree-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .tree-item:hover {
+            transform: translateY(-5px);
+        }
+        .tree-item a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .tree-item a:hover {
+            text-decoration: underline;
+        }
+        .tree-description {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="graphs.html">Startup Graphs</a></li>
+            <li><a href="proba_pages.html">Probability Analysis</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Probability Trees</h1>
+        <div class="tree-grid">
+            <div class="tree-item">
+                <a href="proba_pages/Description_tree.html">Description Tree</a>
+                <p class="tree-description">Analyze the structure and patterns in startup descriptions.</p>
+            </div>
+            <div class="tree-item">
+                <a href="proba_pages/Problem_tree.html">Problem Tree</a>
+                <p class="tree-description">Explore the hierarchy of problems addressed by startups.</p>
+            </div>
+            <div class="tree-item">
+                <a href="proba_pages/FiftyCharacter_tree.html">50-Character Tree</a>
+                <p class="tree-description">Examine concise startup pitches in 50 characters or less.</p>
+            </div>
+            <div class="tree-item">
+                <a href="proba_pages/Setting_tree.html">Setting Tree</a>
+                <p class="tree-description">Investigate the various contexts and environments of startups.</p>
+            </div>
+            <div class="tree-item">
+                <a href="proba_pages/LongerTLDR_tree.html">Longer TL;DR Tree</a>
+                <p class="tree-description">Analyze extended summary structures of startup pitches.</p>
+            </div>
+            <div class="tree-item">
+                <a href="proba_pages/Solution_tree.html">Solution Tree</a>
+                <p class="tree-description">Explore the hierarchy of solutions proposed by startups.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
