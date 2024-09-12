@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Startup Analysis Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YC-Dendrolinguistics: AI Startup Similarity Search</title>
+    <meta name="description" content="Explore YC startup pitches through linguistic analysis. Use our AI-powered similarity search to find semantically related startups and uncover pitch patterns.">
+    <meta name="keywords" content="YC-Dendrolinguistics, startup pitches, linguistic analysis, AI, similarity search, Y Combinator">
+    <meta name="author" content="Aman Priyanshu">
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
     <style>
         /* Existing styles */
@@ -138,6 +142,16 @@
             border-radius: 4px;
             margin-bottom: 10px;
         }
+        .tldr-summary {
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -160,7 +174,9 @@
     </nav>
     
     <div class="container">
-        <h1 class="section-title">AI Startup Similarity Search</h1>
+        <h1>YC-Dendrolinguistics</h1>
+        <p class="tldr-summary">"Cultivating linguistic forests from YC startup pitches using bio-inspired grammar trees to map pitch patterns."</p>
+        <h2 class="section-title">AI Startup Similarity Search</h1>
         <p>Enter a search query and click "Search" to find the top 4 most semantically similar startups.</p>
         <textarea id="input" placeholder="Enter your startup search query here..."></textarea>
         <button onclick="searchSimilarStartups()" disabled>Search</button>
