@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentence Embedding Search Demo</title>
+    <title>Sentence Embedding Similarity Search</title>
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
     <style>
         body {
@@ -24,30 +23,51 @@
             padding: 10px;
             border-radius: 5px;
         }
+        button:disabled {
+            background-color: #cccccc;
+        }
     </style>
 </head>
 <body>
-    <h1>Sentence Embedding Search Demo</h1>
-    <p>Enter a sentence and click "Search" to find the most similar document.</p>
+    <h1>Sentence Embedding Similarity Search</h1>
+    <p>Enter a sentence and click "Search" to find the top 4 most similar documents.</p>
     <textarea id="input" placeholder="Enter your sentence here..."></textarea>
-    <button onclick="searchSimilarDocument()">Search</button>
-    <h2>Result:</h2>
+    <button onclick="searchSimilarDocuments()" disabled>Search</button>
+    <h2>Results:</h2>
     <div id="result"></div>
 
     <script>
         let pipeline;
-        let documentEmbeddings;
+        let documentEmbeddings = {};
 
         // Initialize the pipeline and load document embeddings
         async function init() {
+            console.log('Initializing model pipeline...');
             const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
-            window.pipeline = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
-            
+            window.pipeline = await pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs');
+            console.log('Model pipeline initialized.');
+
             // Load the JSON file containing document embeddings
-            const response = await fetch('document_embeddings.json');
-            documentEmbeddings = await response.json();
-            
-            document.querySelector('button').disabled = false;
+            console.log('Loading document embeddings...');
+            try {
+                const response = await fetch('document_embeddings.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // Ensure embeddings are in the correct format (Float32Array)
+                for (const [docName, embeddingArray] of Object.entries(data)) {
+                    documentEmbeddings[docName] = new Float32Array(embeddingArray);
+                }
+
+                console.log('Document embeddings loaded.');
+                document.querySelector('button').disabled = false;
+                console.log('Application is ready.');
+            } catch (error) {
+                console.error('Error loading document embeddings:', error);
+                alert('Failed to load document embeddings. Please check the console for details.');
+            }
         }
 
         function cosineSimilarity(a, b) {
@@ -62,42 +82,49 @@
             return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
         }
 
-        function averageEmbedding(embeddings) {
-            const sum = embeddings.reduce((acc, curr) => acc.map((val, i) => val + curr[i]));
-            return sum.map(val => val / embeddings.length);
-        }
-
-        async function searchSimilarDocument() {
-            const input = document.getElementById('input').value;
-            const result = document.getElementById('result');
+        async function searchSimilarDocuments() {
+            const input = document.getElementById('input').value.trim();
+            const resultDiv = document.getElementById('result');
 
             if (!input) {
-                result.textContent = "Please enter a sentence.";
+                resultDiv.textContent = "Please enter a sentence.";
                 return;
             }
 
-            result.textContent = "Searching...";
+            resultDiv.textContent = "Computing embeddings and searching...";
 
             try {
-                const inputEmbedding = await window.pipeline(input, { pooling: 'mean', normalize: true });
-                const inputVector = Array.from(inputEmbedding.data);
+                // Compute the embedding for the input sentence
+                console.log('Computing embedding for the input sentence...');
+                const output = await window.pipeline(input, { pooling: 'mean', normalize: true });
+                const inputEmbedding = output.data;
 
-                let mostSimilarDoc = '';
-                let highestSimilarity = -Infinity;
+                console.log('Input embedding computed.');
 
-                for (const [docName, docEmbeddings] of Object.entries(documentEmbeddings)) {
-                    const avgDocEmbedding = averageEmbedding(docEmbeddings);
-                    const similarity = cosineSimilarity(inputVector, avgDocEmbedding);
-
-                    if (similarity > highestSimilarity) {
-                        highestSimilarity = similarity;
-                        mostSimilarDoc = docName;
-                    }
+                // Compute cosine similarities with all document embeddings
+                const similarities = [];
+                for (const [docName, docEmbedding] of Object.entries(documentEmbeddings)) {
+                    const similarity = cosineSimilarity(inputEmbedding, docEmbedding);
+                    similarities.push({ docName, similarity });
                 }
 
-                result.textContent = `Most similar document: ${mostSimilarDoc}\nSimilarity score: ${highestSimilarity.toFixed(4)}`;
+                // Sort the documents by similarity in descending order
+                similarities.sort((a, b) => b.similarity - a.similarity);
+
+                // Get the top 4 most similar documents
+                const topResults = similarities.slice(0, 4);
+
+                // Display the results
+                let resultText = 'Top 4 similar documents:\n\n';
+                topResults.forEach((item, index) => {
+                    resultText += `${index + 1}. ${item.docName} (Similarity: ${item.similarity.toFixed(4)})\n`;
+                });
+
+                resultDiv.textContent = resultText;
+                console.log('Search completed.');
             } catch (error) {
-                result.textContent = `Error: ${error.message}`;
+                resultDiv.textContent = `Error: ${error.message}`;
+                console.error('Error during search:', error);
             }
         }
 

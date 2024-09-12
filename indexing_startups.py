@@ -35,8 +35,9 @@ def process_startups(startup_data, tokenizer, model, batch_size, window_size):
                 embs = embs.cpu().numpy()
             startup_embs.append(embs)
         if startup_embs:
-            startup_embs = np.concat(startup_embs, axis=0).tolist()
-            startup_embeddings[startup_name] = startup_embs
+            startup_embs = np.concat(startup_embs, axis=0)
+            startup_embs = np.mean(startup_embs, axis=0)
+            startup_embeddings[startup_name] = startup_embs.tolist()
     return startup_embeddings
 
 tokenizer = AutoTokenizer.from_pretrained('Snowflake/snowflake-arctic-embed-xs')
