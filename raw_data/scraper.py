@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import os
+import json
 import re
 from tqdm import tqdm
 
@@ -25,8 +26,17 @@ def scrape_and_save(urls, names, directory):
         if html_content:
             save_html(html_content, filepath)
 
+def create_key_value_pair(urls, names):
+    key_value_pair = {}
+    for url, name in tqdm(zip(urls, names), total=len(urls), desc="downloading_startups"):
+        filename = sanitize_filename(name) + '.html'
+        key_value_pair[filename] = url
+    with open("name_to_url.json", "w") as f:
+        json.dump(key_value_pair, f, indent=4)
+
 if __name__ == "__main__":
     df = pd.read_csv("startup_list.csv")
     urls = df["URL"].tolist()
     names = df["Name"].tolist()
-    scrape_and_save(urls, names, "raw_dump")
+    #scrape_and_save(urls, names, "raw_dump")
+    create_key_value_pair(urls=urls, names=names)
