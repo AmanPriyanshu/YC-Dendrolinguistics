@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sentence Embedding Similarity Search</title>
+    <title>Startup Similarity Search</title>
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
     <style>
         body {
@@ -16,57 +16,81 @@
             width: 100%;
             height: 100px;
             margin-bottom: 10px;
-        }
-        #result {
-            white-space: pre-wrap;
-            background-color: #f0f0f0;
             padding: 10px;
-            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
         }
         button:disabled {
             background-color: #cccccc;
         }
+        #result {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .startup {
+            margin-bottom: 30px;
+        }
+        .startup h3 {
+            margin-top: 0;
+        }
+        .founders {
+            margin-left: 20px;
+        }
+        .founder {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>Sentence Embedding Similarity Search</h1>
-    <p>Enter a sentence and click "Search" to find the top 4 most similar documents.</p>
-    <textarea id="input" placeholder="Enter your sentence here..."></textarea>
-    <button onclick="searchSimilarDocuments()" disabled>Search</button>
-    <h2>Results:</h2>
+    <h1>Startup Similarity Search</h1>
+    <p>Enter a search query and click "Search" to find the top 4 most semantically similar startups.</p>
+    <textarea id="input" placeholder="Enter your startup search query here..."></textarea>
+    <button onclick="searchSimilarStartups()" disabled>Search</button>
     <div id="result"></div>
-
     <script>
         let pipeline;
         let documentEmbeddings = {};
-
-        // Initialize the pipeline and load document embeddings
+        let startupDetails = {};
         async function init() {
             console.log('Initializing model pipeline...');
             const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
             window.pipeline = await pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs');
             console.log('Model pipeline initialized.');
-
-            // Load the JSON file containing document embeddings from GitHub
             console.log('Loading document embeddings from GitHub...');
             try {
-                const response = await fetch('https://raw.githubusercontent.com/AmanPriyanshu/YC-Dendrolinguistics/main/data/document_embeddings.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                // Load document embeddings
+                const embeddingsResponse = await fetch('https://raw.githubusercontent.com/AmanPriyanshu/YC-Dendrolinguistics/main/data/document_embeddings.json');
+                if (!embeddingsResponse.ok) {
+                    throw new Error(`HTTP error! Status: ${embeddingsResponse.status}`);
                 }
-                const data = await response.json();
-
-                // Ensure embeddings are in the correct format (Float32Array)
-                for (const [docName, embeddingArray] of Object.entries(data)) {
+                const embeddingsData = await embeddingsResponse.json();
+                for (const [docName, embeddingArray] of Object.entries(embeddingsData)) {
                     documentEmbeddings[docName] = new Float32Array(embeddingArray);
                 }
-
                 console.log('Document embeddings loaded.');
+                // Load startup details
+                console.log('Loading startup details from GitHub...');
+                const startupsResponse = await fetch('https://raw.githubusercontent.com/AmanPriyanshu/YC-Dendrolinguistics/main/data/startups.json');
+                if (!startupsResponse.ok) {
+                    throw new Error(`HTTP error! Status: ${startupsResponse.status}`);
+                }
+                const startupsData = await startupsResponse.json();
+                // Create a mapping from startup name to its details
+                startupsData.forEach(startup => {
+                    startupDetails[startup.name] = startup;
+                });
+                console.log('Startup details loaded.');
                 document.querySelector('button').disabled = false;
                 console.log('Application is ready.');
             } catch (error) {
-                console.error('Error loading document embeddings:', error);
-                alert('Failed to load document embeddings. Please check the console for details.');
+                console.error('Error loading data:', error);
+                alert('Failed to load data. Please check the console for details.');
             }
         }
 
@@ -82,45 +106,38 @@
             return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
         }
 
-        async function searchSimilarDocuments() {
+        async function searchSimilarStartups() {
             const input = document.getElementById('input').value.trim();
             const resultDiv = document.getElementById('result');
-
             if (!input) {
-                resultDiv.textContent = "Please enter a sentence.";
+                resultDiv.textContent = "Please enter a search query.";
                 return;
             }
-
             resultDiv.textContent = "Computing embeddings and searching...";
-
             try {
-                // Compute the embedding for the input sentence
-                console.log('Computing embedding for the input sentence...');
+                console.log('Computing embedding for the input search query...');
                 const output = await window.pipeline(input, { pooling: 'mean', normalize: true });
                 const inputEmbedding = output.data;
-
                 console.log('Input embedding computed.');
-
-                // Compute cosine similarities with all document embeddings
                 const similarities = [];
                 for (const [docName, docEmbedding] of Object.entries(documentEmbeddings)) {
                     const similarity = cosineSimilarity(inputEmbedding, docEmbedding);
                     similarities.push({ docName, similarity });
                 }
-
-                // Sort the documents by similarity in descending order
                 similarities.sort((a, b) => b.similarity - a.similarity);
-
-                // Get the top 4 most similar documents
                 const topResults = similarities.slice(0, 4);
-
                 // Display the results
-                let resultText = 'Top 4 similar documents:\n\n';
+                let resultHTML = '';
                 topResults.forEach((item, index) => {
-                    resultText += `${index + 1}. ${item.docName} (Similarity: ${item.similarity.toFixed(4)})\n`;
+                    const docName = item.docName.slice(start=0, end=-5);
+                    const startup = startupDetails[docName];
+                    if (startup) {
+                        resultHTML += formatStartupDetails(startup, item.similarity);
+                    } else {
+                        resultHTML += `<p>No details found for ${item.docName}</p>`;
+                    }
                 });
-
-                resultDiv.textContent = resultText;
+                resultDiv.innerHTML = resultHTML;
                 console.log('Search completed.');
             } catch (error) {
                 resultDiv.textContent = `Error: ${error.message}`;
@@ -128,7 +145,46 @@
             }
         }
 
-        // Initialize the pipeline and load embeddings when the page loads
+        function formatStartupDetails(startup, similarity) {
+            let html = `<div class="startup">`;
+            html += `<h3>${startup.name} (Similarity: ${similarity.toFixed(4)})</h3>`;
+            if (startup.short_description) {
+                html += `<p><strong>Short Description:</strong> ${startup.short_description}</p>`;
+            }
+            if (startup.description) {
+                html += `<p><strong>Description:</strong> ${startup.description}</p>`;
+            }
+            if (startup.founders && Object.keys(startup.founders).length > 0) {
+                html += `<p><strong>Founders:</strong></p>`;
+                html += `<div class="founders">`;
+                for (const [founderName, founderBio] of Object.entries(startup.founders)) {
+                    html += `<div class="founder">`;
+                    html += `<p><strong>${founderName}</strong></p>`;
+                    html += `<p>${founderBio}</p>`;
+                    html += `</div>`;
+                }
+                html += `</div>`;
+            }
+            if (startup.tldr_one_sentence) {
+                html += `<p><strong>TL;DR:</strong> ${startup.tldr_one_sentence}</p>`;
+            }
+            if (startup.setting) {
+                html += `<p><strong>Setting:</strong> ${startup.setting}</p>`;
+            }
+            if (startup.problem) {
+                html += `<p><strong>Problem:</strong> ${startup.problem}</p>`;
+            }
+            if (startup.solution) {
+                html += `<p><strong>Solution:</strong> ${startup.solution}</p>`;
+            }
+            if (startup.url) {
+                html += `<p><strong>URL:</strong> <a href="${startup.url}" target="_blank">${startup.url}</a></p>`;
+            }
+            html += `</div>`;
+            return html;
+        }
+
+        // Initialize the pipeline and load data when the page loads
         init();
     </script>
 </body>
