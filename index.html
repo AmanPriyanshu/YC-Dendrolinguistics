@@ -6,11 +6,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
+        }
+        h1 {
+            color: #252c45;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
         }
         textarea {
             width: 100%;
@@ -18,33 +26,103 @@
             margin-bottom: 10px;
             padding: 10px;
             font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
         }
         button:disabled {
             background-color: #cccccc;
+            cursor: not-allowed;
         }
         #result {
-            white-space: pre-wrap;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 5px;
             margin-top: 20px;
         }
         .startup {
-            margin-bottom: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
         }
-        .startup h3 {
-            margin-top: 0;
+        .startup-header {
+            background-color: #e9f0f7;
+            padding: 15px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .startup-header h3 {
+            margin: 0;
+            color: #252c45;
+        }
+        .startup-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .startup-content.open {
+            display: block;
+        }
+        .startup-header::after {
+            content: '▼';
+            transition: transform 0.3s ease;
+        }
+        .startup-header.open::after {
+            transform: rotate(180deg);
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            color: white;
+        }
+        .tag.url {
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .tag.url:hover {
+            opacity: 0.8;
+        }
+        .startup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 10px;
         }
         .founders {
-            margin-left: 20px;
+            margin-top: 15px;
         }
         .founder {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
             margin-bottom: 10px;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .url { background-color: #3498db; }
+        .description { background-color: #2ecc71; }
+        .problem { background-color: #e74c3c; }
+        .solution { background-color: #f39c12; }
+        .founder-tag { background-color: #9b59b6; }
     </style>
 </head>
 <body>
@@ -129,7 +207,7 @@
                 // Display the results
                 let resultHTML = '';
                 topResults.forEach((item, index) => {
-                    const docName = item.docName.slice(start=0, end=-5);
+                    const docName = item.docName.slice(0, -5);
                     const startup = startupDetails[docName];
                     if (startup) {
                         resultHTML += formatStartupDetails(startup, item.similarity);
@@ -138,6 +216,13 @@
                     }
                 });
                 resultDiv.innerHTML = resultHTML;
+                // Add event listeners to startup headers
+                document.querySelectorAll('.startup-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        header.classList.toggle('open');
+                        header.nextElementSibling.classList.toggle('open');
+                    });
+                });
                 console.log('Search completed.');
             } catch (error) {
                 resultDiv.textContent = `Error: ${error.message}`;
@@ -147,16 +232,22 @@
 
         function formatStartupDetails(startup, similarity) {
             let html = `<div class="startup">`;
+            html += `<div class="startup-header">`;
             html += `<h3>${startup.name} (Similarity: ${similarity.toFixed(4)})</h3>`;
+            if (startup.url) {
+                html += `<a href="${startup.url}" target="_blank" class="tag url" title="${startup.url}">URL</a>`;
+            }
+            html += `</div>`;
+            html += `<div class="startup-content">`;
             if (startup.short_description) {
-                html += `<p><strong>Short Description:</strong> ${startup.short_description}</p>`;
+                html += `<p><span class="tag description">Description</span> ${startup.short_description}</p>`;
             }
             if (startup.description) {
-                html += `<p><strong>Description:</strong> ${startup.description}</p>`;
+                html += `<p><span class="tag description">Full Description</span> ${startup.description}</p>`;
             }
             if (startup.founders && Object.keys(startup.founders).length > 0) {
-                html += `<p><strong>Founders:</strong></p>`;
                 html += `<div class="founders">`;
+                html += `<span class="tag founder-tag">Founders</span>`;
                 for (const [founderName, founderBio] of Object.entries(startup.founders)) {
                     html += `<div class="founder">`;
                     html += `<p><strong>${founderName}</strong></p>`;
@@ -172,15 +263,15 @@
                 html += `<p><strong>Setting:</strong> ${startup.setting}</p>`;
             }
             if (startup.problem) {
-                html += `<p><strong>Problem:</strong> ${startup.problem}</p>`;
+                html += `<p><span class="tag problem">Problem</span> ${startup.problem}</p>`;
             }
             if (startup.solution) {
-                html += `<p><strong>Solution:</strong> ${startup.solution}</p>`;
+                html += `<p><span class="tag solution">Solution</span> ${startup.solution}</p>`;
             }
             if (startup.url) {
                 html += `<p><strong>URL:</strong> <a href="${startup.url}" target="_blank">${startup.url}</a></p>`;
             }
-            html += `</div>`;
+            html += `</div></div>`;
             return html;
         }
 
